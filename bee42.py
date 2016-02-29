@@ -8,7 +8,8 @@ BEE42_INI_USERNAME  = "Username"
 BEE42_INI_TOKEN     = "Token"
 BEE42_INI_API_URL   = "Api_Url"
 
-BEE42_WEIGHT_GOAL   = "Weight_Goal"
+BEE42_WEIGHT_GOAL   = "Test_Weight_Goal"
+BEE42_MORE_GOAL     = "Test_More_Goal"
 
 class Beeminder:
     def __init__(self):
@@ -26,6 +27,7 @@ class Beeminder:
         self.api_url = self.ini_beeminder[BEE42_INI_API_URL]
         
         self.weight_goal = self.ini_beeminder[BEE42_WEIGHT_GOAL]
+        self.more_goal = self.ini_beeminder[BEE42_MORE_GOAL]
 
         self.user_url = self.api_url + "users/" + self.username + ".json"
 
@@ -64,11 +66,35 @@ class Beeminder:
     def getGoalCurValue(self, goal):
         g = self.getGoal(goal)
         return g["curval"]
+        
+    def postGoalNow(self, goal, comment="", value=1):
+        url= self.datapoint_url(goal)
+        p = self.nowparam(comment, value)
+        r = requests.post(url, params=p)
+        return r.status_code        
+
+    def postGoalYesterday(self, goal, comment="", value=1):
+        url= self.datapoint_url(goal)
+        p = self.yesterdayparam(comment, value)
+        r = requests.post(url, params=p)
+        return r.status_code        
       
 if __name__ == "__main__":
     b = Beeminder()
-    print ("User:", b.user)
-    print ("My Goals:", b.goals)
-    print ("Weight Goal:")
-    print (b.getGoal(b.weight_goal))
-    print ("Current Weight:", b.getGoalCurValue(b.weight_goal))
+
+    print ("Test More start Value:")
+    print (b.getGoalCurValue("testmore"))
+    
+    print (b.postGoalNow("testmore","Test Value"))
+
+    print ("Test More end Value:")
+    print (b.getGoalCurValue("testmore"))
+
+
+    #print ("User:", b.user)
+    #print ("My Goals:", b.goals)
+    #print ("Weight Goal:")
+    #print (b.getGoal(b.weight_goal))
+    #print ("Current Weight:", b.getGoalCurValue(b.weight_goal))
+    #print ("Current Weight:", b.getGoalCurValue(b.weight_goal))
+
