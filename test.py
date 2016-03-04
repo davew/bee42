@@ -18,6 +18,10 @@ def dave():
     user = User(username, token)
     print("Username:", user.username, "tz:", user.timezone, "update:", user.updated_at, "goals", user.goalslugs, "db:", user.deadbeat)
 
+    goal = user.load_goal("cyclemore")
+    print("Slug:", goal.slug, "Title:", goal.title, "Desc:", goal.description, "Val:", goal.goalval, "init:", goal.initday)
+
+
 if __name__ == "__main__":
     dave()
 

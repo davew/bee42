@@ -28,21 +28,22 @@ class User:
         self.goalslugs = user_dict["goals"]
         self.deadbeat = user_dict["deadbeat"]
 
-    def api_get_skinny_goal(self, goal_slug):
-        """A skinny goal is defined by the Beeminder API as a subset of the
-        goal data and is all that is generally needed.
-        It contains only the most recent datapoint.
-        This collects a goal matching the goal_slug passed for the current user
-        from Beeminder and returns a SkinnyGoal object"""
-        response = requests.get(self.user_url, params=self.auth_param)
-        user_dict = response.json()
-        
+    def load_goal(self, slug):
+        """retrieve a single goal from the Beeminder API"""
+        goal_url = BEE42_INI_API_URL + "users/" + self.username + "/goals/" + slug + ".json"
+        response = requests.get(goal_url, params=self.auth_param)
+        goal_dict = response.json()
+        goal = Goal(slug, goal_dict)
+        return goal
 
-class SkinnyGoal:
-    """The limited version of a Beeminder goal"""
+
+class Goal:
+    """A limited version of a Beeminder goal"""
     
-    def __init__(self, goal_slug):
-        """The goal_slug should be considered static for a goal so is passed
-        to the constructor. Goals can be loaded from the API or created locally
-        and then used to update Beeminder"""
-        self.goal_slug = goal_slug
+    def __init__(self, slug, goal_dict):
+        """Create a goal from the response to an api get goal"""
+        self.slug = slug
+        self.title = goal_dict["title"]
+        self.description = goal_dict["description"]
+        self.goalval = goal_dict["goalval"]
+        self.initday = datetime.datetime.fromtimestamp(goal_dict["initday"])
