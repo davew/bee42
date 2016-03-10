@@ -1,6 +1,7 @@
 import configparser
 
 from bee42.bee42 import User
+from bee42.bee42 import Datapoint
 
 BEE42_INI = "bee42.ini"
 BEE42_INI_BEEMINDER = "BeeMinder"
@@ -21,7 +22,14 @@ def dave():
     goal = user.load_goal("cyclemore")
     print("Slug:", goal.slug, "Title:", goal.title, "Desc:", goal.description, "Val:", goal.goalval, "init:", goal.initday)
 
+    dp = Datapoint(user, "testmore")
+    dp.value = 2
+    dp.comment = "an autotest"
+    dp.post()
 
+    dps = user.getDatapoints("testmore")
+    print("DPS:", dps)
+    
 if __name__ == "__main__":
     dave()
 
