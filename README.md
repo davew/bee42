@@ -1,14 +1,23 @@
 #Beeminder tools
 
-Goal: Provide clean, simple, pythonic access to the Beeminder API.
+Goal: Provide clean, simple, pythonic access to the Beeminder API. Specifically
+to post Strava activities to Beeminder.
 
-I haven't done much programming in recent years. Please challenge me if you feel that I am over complicating things or not doing them in the most pythonic way.
+I haven't done much programming in recent years. Please challenge me if you
+feel that I am over complicating things or not doing them in the most pythonic
+way or can improve the code in anyway.
 
-Tasks (leading to updating Beeminder Strava goals for both running and cycling. For each supporting occurances and distances (in miles of km)
+I am coding this in Python 3, although I'm not deliberately seeking to make it
+incompatible with Python 2.7. Hence, I will accept ideas to enable people to use
+it with Python 2.7 where possible.
 
-1. Get a user from the API, create a user object. Throw exceptions for all possible error conditions.
-2. Get a simple goal from the API, create a goal object. Throw exceptions for all possible error conditions.
-3. Get the timestamp of the last datapoint (so I know how far back to go in Strava)
-4. Get all the activities from the last datapoint timestamp
-5. Check which activities fit the goal
-6. Post the activities as datapoints (keep track of duplicates).
+This requires Stravalib. I am using the current released version (hence having
+to set logging to error only as it issues lots of warnings). I installed this
+in my virtual environment using
+
+pip install Stravalib
+
+It automatically uses the 2to3 code to update it to Python 3 syntax.
+
+I can now use the beestrava.py script to add my last 15 strava activities to
+Beeminder without getting duplicates.
