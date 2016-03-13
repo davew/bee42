@@ -43,10 +43,10 @@ def dave():
             print(add_ride(user, a))
 
 def add_run(user, activity):
-    return add_activity(user, RUN_GOAL_SLUG, activity, unithelper.kilometers(activity.distance)):
+    return add_activity(user, RUN_GOAL_SLUG, activity, unithelper.kilometers(activity.distance))
 
 def add_ride(user, activity):
-    return add_activity(user, RIDE_GOAL_SLUG, activity, unithelper.miles(activity.distance)):
+    return add_activity(user, RIDE_GOAL_SLUG, activity, unithelper.miles(activity.distance))
 
 def add_activity(user, goal_slug, activity, value):
     dp = Datapoint(user, goal_slug)
