@@ -24,8 +24,22 @@ def dave():
 
     dp = Datapoint(user, "testmore")
     dp.value = 2
-    dp.comment = "an autotest"
-    dp.post()
+    dp.comment = "Duplicate test 4"
+    dp.requestid = "Duplicate"
+    print("dup check1.Status", dp.post())
+    
+
+    dp = Datapoint(user, "drinkcoffee")
+    dp.value = 2
+    dp.comment = "Duplicate test 5"
+    dp.requestid = "Duplicate"
+    print("dup check2.Status", dp.post())
+
+    dp = Datapoint(user, "testmore")
+    dp.value = 3
+    dp.comment = "Duplicate test 6"
+    dp.requestid = "Duplicate"
+    print("dup check3.Status", dp.post())
 
     dps = user.getDatapoints("testmore")
     print("DPS:", dps)
